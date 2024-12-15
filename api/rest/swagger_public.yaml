@@ -1,0 +1,150 @@
+openapi: "3.0.3"
+info:
+  title: user registration
+  description: provides client regisraration by email.
+  version: 0.0.1
+  contact:
+    name: API Support
+    email: support@example.com
+    url: http://example.com/support
+
+servers:
+  - url: "http://localhost:8801/"
+    description: test
+
+tags:
+  - name: user
+
+paths:
+  /api/v1/public/user/register:
+    get:
+      operationId: register
+      description: register email
+      tags:
+        - user
+      parameters:
+        - name: email
+          in: query
+          required: true
+          description: client email
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OperationResponses"
+        "500":
+          description: "internal error"
+  /api/v1/public/user/confirmation_otp:
+    get:
+      operationId: confirmationOTP
+      description: otp confirmation by email
+      tags:
+        - user
+      parameters:
+        - name: email
+          in: query
+          required: true
+          description: client email
+          schema:
+            type: string
+        - name: otp
+          in: query
+          required: true
+          description: one time password from email
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OperationResponses"
+        "500":
+          description: "internal error"
+  /api/v1/public/user/confirmation:
+    get:
+      operationId: confirmation
+      description: confirmation login and password
+      tags:
+        - user
+      parameters:
+        - name: email
+          in: query
+          required: true
+          description: client email
+          schema:
+            type: string
+        - name: login
+          in: query
+          required: true
+          description: client login
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: true
+          description: client password
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OperationResponses"
+        "500":
+          description: "internal error"
+  /api/v1/public/user/login:
+    get:
+      operationId: login
+      description: client login
+      tags:
+        - user
+      parameters:
+        - name: login
+          in: query
+          required: true
+          description: client login
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: true
+          description: client password
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponses"
+        "500":
+          description: "internal error"
+
+components:
+  schemas:  
+    OperationResponses:
+      required:
+      - result
+      properties:
+        result:
+          type: string
+        error_message:
+          type: string
+    LoginResponses:
+      required:
+      - code
+      properties:
+        code:
+          type: string
+        error_message:
+          type: string
+

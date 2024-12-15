@@ -1,0 +1,8 @@
+.env
+vendor
+gopath
+sync.sh
+.rsyncignore
+cmd/log.json
+.vscode
+.scripts/
